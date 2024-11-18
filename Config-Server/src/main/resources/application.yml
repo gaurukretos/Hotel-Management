@@ -1,0 +1,20 @@
+server:
+  port: 9096
+
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:9094/eureka
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/gauru17/micro-configuration-service
+          clone-on-start: true

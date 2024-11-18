@@ -1,0 +1,46 @@
+server:
+  port: 9095
+
+spring:
+  application:
+    name: API-GATEWAY
+
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: USERSERVICE
+            uri: lb://USERSERVICE   # Replace this with the actual URL of the UserService
+            predicates:
+              - Path=/users/**
+
+          - id: RATING-SERVICE
+            uri: lb://RATING-SERVICE   # Replace this with the actual URL of the RatingService
+            predicates:
+              - Path=/ratings/**
+
+          - id: HOTELSERVICE
+            uri: lb://HOTELSERVICE   # Replace this with the actual URL of the HotelService
+            predicates:
+              - Path=/**
+
+  main:
+    allow-bean-definition-overriding: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:9094/eureka
+
+# okta configuration
+okta:
+  oauth2:
+    issuer: https://dev-47065538.okta.com/oauth2/default
+    audience: api://default
+    client-id: 0oajbp68gnh53uuFb5d7
+    client-secret: quN-2Akx6kYH8MY07m8XCFJVkUAmXHbIxhQ1qESGXTjIlWqZxIhOKF_dXI5oxGuA
+    scopes: openid, profile, email, offline_access
